@@ -2,13 +2,14 @@ var fs = require("fs");
 var parseString = require('xml2js').parseString;
 var tokenizer = require('sbd');
 var unique = require('array-unique');
+//var bigXml = require('big-xml');
 
 function clean_text(sentence,separators) {
 
-      var array_entity = sentence.split(new RegExp(separators.join('|'),'g'));
-
-      for(i=0;i<array_entity.length;i++)
+      var array_entity = sentence.replace(/\(.*?\)/g,'').split(new RegExp(separators.join('|'),'g'));
+      for(i=0;i<array_entity.length;i++){
          array_entity.splice(i,1);
+       }
 
       for(i in array_entity){
         if(array_entity[i].length>=80){
@@ -18,11 +19,36 @@ function clean_text(sentence,separators) {
       }
 
       if(array_entity.length==0)
-        console.log("!!!ERROR!!!"); // PER VEDERE DOVE NON ESTRAIAMO
+        console.log("!!!ERROR!!!");
 
       return array_entity;
 };
 
+/*
+function remove_tonde(text){
+  var text2;
+  var aperte;
+
+  while (text.indexOf('(')!=-1){
+    text2 = text;
+
+    while(text2.indexOf('(')!=-1){
+      aperte = text2.substring(text2.indexOf('('));
+      text2 = text2.substring(text2.indexOf('(')+1);
+    }
+
+    var chiuse = aperte.indexOf(')')+1;
+    if (chiuse==0){
+      text = text.replace(aperte, aperte.replace('(',''));
+    }
+    else {
+      var temp = aperte.substring(0,chiuse);
+      text = text.replace(temp,'');
+    }
+
+  }
+  return text;
+  };
 
 function remove_graffe(text,title){
 
@@ -34,7 +60,7 @@ function remove_graffe(text,title){
 
     text = text.replace(s,'');
     text2 = text2.replace(s,'');
-  } // TOGLIE TUTTE QUESTE STRUTTURE CHE SONO TIPO INFOBOX
+  }
 
    var chiuse;
    var temp;
@@ -64,9 +90,9 @@ function remove_graffe(text,title){
 
     if(temp.toUpperCase().indexOf(title[0].toUpperCase()+"'''|")!=-1){
         text = text.replace(temp,"'''"+title+"'''");
-      } // PER L'ENTITA SCRITTE IN MODO PARTICOLARE PER SEGNALARE LA PRONUNCIA
+      }
     else{
-        if(temp.toUpperCase().indexOf(title[0].toUpperCase())!=-1) // // PER L'ENTITA SCRITTE IN MODO PARTICOLARE PER SEGNALARE LA LINGUA
+        if(temp.toUpperCase().indexOf(title[0].toUpperCase())!=-1)
           text = text.replace(temp,title);
           else
           text = text.replace(temp,'');
@@ -74,7 +100,68 @@ function remove_graffe(text,title){
    }
    return text;
 };
+*/
 
+function remove_file(text){
+
+  let reg = /\[\[File[a-z:0-9,.:;!"£$%&\/()=?'^ì_+|[\]{}èé§ùàòç\- ]*\]\]/ig;
+  while(reg.test(text) ){ //dovrebbe non servire il while, fa tutto in una passata
+    text = text.replace(reg, '');
+  }
+
+  text = text.replace(reg, '');
+  return text;
+
+};
+
+
+function remove_image(text){
+
+  let reg = /\[\[Image[a-z:0-9,.:;!"£$_%&\/()=?'^ì+|[\]{}èé§ùàòç\- ]*\]\]|image:[a-z:0-9,.:;!"£$%&\/()=?'^ì+|[\]è_é§ùàòç\- ]*/ig;
+  while(reg.test(text) ){ //dovrebbe non servire il while, fa tutto in una passata
+    text = text.replace(reg, '');
+  }
+
+  text = text.replace(reg, '');
+  return text;
+
+}
+
+
+
+function remove_tonde(text){
+
+  let reg = /[(][^()]*[a-z;\-."&%$£!^:,è_é§ùàòç{}' ]*[)]/ig;
+  while(reg.test(text) ){
+    text = text.replace(reg, '');
+  }
+  reg = /(|)/g;
+  text = text.replace(reg, '');
+  return text;
+
+}
+
+function remove_graffe(text, title){
+  var text2 = text;
+
+  while(text2.indexOf('{|') !== -1){
+    text2 = text2.substring(text2.indexOf('{|'));
+    var s = text2.substring(0,text2.indexOf('|}')+2);
+
+    text = text.replace(s,'');
+    text2 = text2.replace(s,'');
+  } // TOGLIE TUTTE QUESTE STRUTTURE CHE SONO TIPO INFOBOX
+
+
+  let reg = /[{][^{}]*[a-z;\-."&%$èé§ùàòç?!£!^:,|()' ]*[}]/ig;
+  while(reg.test(text) ){
+    text = text.replace(reg, '');
+  }
+  reg = /{|}/g;
+  text = text.replace(reg, '');
+  return text;
+
+};
 
 module.exports = function(file,callback) {
 
@@ -92,10 +179,11 @@ module.exports = function(file,callback) {
               return console.error(err);
            }
 
-           for(k=0;k<result.doc.page.length;k++) {
+           for(k=2000;k<result.doc.page.length;k++) {
 
               var title = result.doc.page[k].title;
-              var id = +result.doc.page[k].id;
+              console.log(title);
+              var id = result.doc.page[k].id;
               var text = result.doc.page[k].revision[0].text[0]._;
 
               if(text.indexOf("#REDIRECT")!=-1) {
@@ -109,7 +197,9 @@ module.exports = function(file,callback) {
               text = text.replace(/ \'\'{{.*}}\'\' /g,'');
 
               text = remove_graffe(text,title);
-
+              text = remove_tonde(text);
+              text = remove_file(text);
+              text = remove_image(text);
               text = text.replace(/\[\[File:.*?\.?\]\]\n|\[\[File:.*?\.?\]\]|\[\[Image:.*\.?\]\]|\[\[Image:.*\.?\]\]\n|\[http:.*?\]|\[https:.*?\]/g, '');
 
               var text2 = text;
@@ -134,61 +224,99 @@ module.exports = function(file,callback) {
               for(i = 0; i < array_text.length; i++)
                 text = text.replace(array_text[i],'');
 
-              var regex = /<ref>.*?<\/ref>|<(?:.|\n)*?>|&lt;.*&gt;|<!--.*-->|&quot;/g;
+              var regex = /<ref>(.*?)<\/ref>?|<ref .*?>(.*?)<\/ref>?|<ref .*?\/>|<(?:.|[\r\n])*?>|&lt;.*&gt;|<!--.*-->|&quot;|&lowast;/g;
               text = text.replace(regex, '');
+              text = text.replace(/&nbsp;|&ndash;/g, ' ');
+              text = text.replace(/gallery caption=.*\/gallery/g,'');
 
               var frasi = text.split('\n');
               var testo = [];
 
               var separators = ["\'\'\'\'\'","\'\'\'"];
 
-              // PER PRENDERE SOLO FRASI NON VUOTE OPPURE CON UN NERETTO
               for( var i = 0; i < frasi.length; i++ ) {
-                if(frasi[i]!="" && frasi[i].indexOf(".")!=-1 || frasi[i].indexOf("'''")!=-1){
+                if(frasi[i]!="" && frasi[i].indexOf(".")!=-1 && frasi[i].indexOf("*")==-1 || frasi[i].indexOf("'''")!=-1){
                     testo.push(frasi[i]);
                   }
               }
 
-               
-               var first_sentence = '';
-               for(var i = 0; i < testo.length; i++){
-                 if(testo[i].indexOf("\'\'\'")!=-1 || testo[i].indexOf("\'\'\'\'\'")!=-1){
-                    first_sentence = testo[i];
-                    break;
-                  }
+             var first_sentence = '';
+
+             for(var i = 0; i < testo.length; i++){
+               if(testo[i].indexOf("\'\'\'")!=-1 || testo[i].indexOf("\'\'\'\'\'")!=-1){
+                  first_sentence = testo[i];
+                  break;
                 }
-
-
-              //console.log("TESTO PULITO: "+testo.join('\n'));
-
-              var pe = title.concat(clean_text(first_sentence,separators));
-
-
-              /*
-              var se = testo.split('[[');
-
-              for(i=0;i<se.length;i++) {
-                 se[i] = se[i].substr(0, se[i].indexOf(']]'));
-                 //console.log("ENTITA NUMMERO "+i+": "+se[i]);
               }
 
-              se.pop();
-              */
+              let pe = title.concat(clean_text(first_sentence,separators));
 
+              let pe_temp = [];
+
+              for(j in pe){
+                pe[j] = pe[j].replace(/\|.*?]]/g,' ');
+                pe[j] = pe[j].replace(/\[|\]/g,'');
+                pe_temp.push(pe[j]);
+              }
+
+              pe = pe_temp;
               pe = unique(pe);
 
-              let callback_obj = {id: id, pe: pe, first_sentence: first_sentence, text: testo};
+              let pe_check = pe;
+
+              for(z in pe_check) {
+                pe_check[z] = pe_check[z].toLowerCase();
+              }
+
+              pe_check = unique(pe_check);
+
+              var testo_intero = testo.join('\n');
+              var se = testo_intero.match(/\[\[[a-zA-Z 0-9.'|()-]+\]\]/g);
+
+              se = (se) ?  unique(se): [];
+
+              console.log('--------');
+              let anchor = [];
+              for(n in se){
+                anchor.push(se[n].replace(/\[\[/g,''));
+                if(se[n].indexOf('|') !== -1)
+                     anchor[n] =  anchor[n].substr(anchor[n].indexOf('|')+1);
+                anchor[n] = anchor[n].replace(/\]\]/g,'');
+                anchor[n] = anchor[n].toLowerCase();
+              };
+              anchor = unique(anchor);
+
+              anchor = anchor.filter(function(val) {
+                return pe_check.indexOf(val) === -1;
+              })
+
+              for(w in anchor) {
+                if(anchor[w] === '' || anchor[w].length === 1) {
+                  anchor.splice(w,1);
+                }
+              }
+
+              anchor.sort(function(a,b){
+                return a.length - b.length;
+              });
+
+              let abbreviations = ["Mt","c","ca","e.g","et al","etc","i.e","p.a","Dr","Gen","Hon","Mr","Mrs","Ms","Prof","Rev","Sr","Jr","St","Assn","Ave","Dept","est","fig","inc","mt","no","oz","sq","st","vs"];
+
+              let options = {
+                  "newline_boundaries" : false,
+                  "html_boundaries"    : false,
+                  "sanitize"           : false,
+                  "allowed_tags"       : false,
+                  "abbreviations"      : abbreviations
+              };
+
+              var array_temp = tokenizer.sentences(testo_intero,options);
+
+              let callback_obj = {id: id, pe: pe, first_sentence: first_sentence, se: anchor, text: array_temp};
+
               out.push(callback_obj);
 
-              console.log("Articolo "+k);
-
-              /*
-              fs.appendFile("output_data/output_parser.txt", '{Frase: '+first_sentence+'\n'+first_sentence.split('\n').length+'}\r\n'+'['+pe.toString()+'] \r\n\r\n\r\n', function(err) {
-                 if(err) {
-                    return console.log(err);
-                 }
-              });
-              */
+              console.log("Articolo "+k+" "+pe);
 
            }
 
