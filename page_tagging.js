@@ -6,24 +6,6 @@ var tcom = require('thesaurus-com');
 var async = require('async');
 
 
-function getSyns(seeds,syns){
-  async.whilst(
-    function(callback) {
-      async.waterfall([
-        function(seeds,callback_) {
-          synonyms(seeds,function(synonyms) {
-            syns = synonyms;
-            //callback_(null);
-          });
-        },
-      ],
-      function(err,result) {
-      //console.log(result);
-      }
-    );
-  });
-}
-
 fs.readFile(wiki_text,function(err_articoli, data_articoli) {
   if(err_articoli) {
     console.log(err_articoli);
@@ -50,26 +32,28 @@ fs.readFile(wiki_text,function(err_articoli, data_articoli) {
     var article_split = data_articoli[i].split(/=======.*?=======/ig);
 		var abstract = article_split[0];
 		article_split.splice(0,1);
-    data_articoli[i] = {abstract: abstract, body: article_split.join("")};
+    data_articoli[i] = {title: abstract: abstract, body: article_split.join("")};
   }
 
-  console.log(keywords.length);
 
   for(var i=0; i<keywords.length; i++){
 
     var syns = [];
+    var title;
     var id = keywords[i].id;
-		var title = keywords[i].title;
 		var se = keywords[i].se;
 		var pe = keywords[i].pe;
 		var seeds = keywords[i].seeds;
     var pe_words = [];
 
-    synonyms(seeds,function(output) {
-      //console.log(output);
-      syns = output;
-      //callback_(null);
-    });
+    fs.appendFile('./output_data/groundTruth.txt','{Title: '+title+'\n\r', function(err) {
+        if(err) {
+            console.log(err);
+                }
+              })
+    // synonyms(seeds,function(output) {
+    //   syns = output;
+    // });
 
 		for(var k=0;k<pe.length;k++){
 			var words = pe[k].split(' ');
