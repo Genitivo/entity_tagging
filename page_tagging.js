@@ -20,11 +20,18 @@ fs.readFile(wiki_text,function(err_articoli, data_articoli) {
   var not_title = new RegExp("(.*?)\n\n", "g");
   var empty_line = new RegExp("^\s*$", "gm");
   var doc_tag = new RegExp("<doc (.*?)>", "g");
+  var titles = [];
+   // "gold ring|string"
 
   data_articoli = data_articoli.toString();
   data_articoli = data_articoli.replace(not_title, "");
   data_articoli = data_articoli.replace(empty_line, "");
-  data_articoli = data_articoli.replace(doc_tag, "");
+
+  data_articoli = data_articoli.replace(doc_tag, function (match, capture) {
+    titles.push(capture.substring(capture.indexOf("title=\"")+7, capture.length-1));
+    return "";
+  });
+
   data_articoli = data_articoli.split("<\/doc>");
   data_articoli.pop();
 
@@ -32,25 +39,26 @@ fs.readFile(wiki_text,function(err_articoli, data_articoli) {
     var article_split = data_articoli[i].split(/=======.*?=======/ig);
 		var abstract = article_split[0];
 		article_split.splice(0,1);
-    data_articoli[i] = {title: abstract: abstract, body: article_split.join("")};
-  }
+    data_articoli[i] = {title: titles[i], abstract: abstract, body: article_split.join("")};
+    }
 
+    // FILE DI INPUT PER TAGME
+    fs.writeFile('./input_data/tagme_input.txt', JSON.stringify(data_articoli), function(err) {
+      if(err) {
+      console.log(err);
+      }
+    })
 
   for(var i=0; i<keywords.length; i++){
 
     var syns = [];
-    var title;
+    var title = data_articoli[i].title;
     var id = keywords[i].id;
 		var se = keywords[i].se;
 		var pe = keywords[i].pe;
 		var seeds = keywords[i].seeds;
     var pe_words = [];
 
-    fs.appendFile('./output_data/groundTruth.txt','{Title: '+title+'\n\r', function(err) {
-        if(err) {
-            console.log(err);
-                }
-              })
     // synonyms(seeds,function(output) {
     //   syns = output;
     // });

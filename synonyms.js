@@ -9,7 +9,6 @@ module.exports = function(words, callback_){
 
 		async.map(words,synonyms,function(err, result){
 			for (i in result){
-				console.log(i);
 				syn = syn.concat(result[i]);
 			};
 			callback_(syn);
