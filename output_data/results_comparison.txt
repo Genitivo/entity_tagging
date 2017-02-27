@@ -1,0 +1,63 @@
+David_Letterman	undefined	5	1	0171	154	170	2	1	0	21	14	9	8	443	392	386
+Edward_Mitchell_Bannister	undefined	3	0	05	8	7	1	0	0	0	16	1	1	1	1	1
+Erik_Satie	undefined	6	4	056	47	65	2	0	0	2	4	4	1	129	95	86
+Louise_Élisabeth_Vigée_Le_Brun	undefined	13	5	024	38	18	1	0	0	0	6	6	2	53	41	34
+Auguste_Rodin	undefined	7	10	1178	135	148	3	0	5	5	1	0	0	138	115	98
+Carl_Barks	undefined	6	3	1375	119	57	0	0	0	0	18	15	14	151	130	124
+Brion_Gysin	undefined	4	0	323	27	13	4	0	3	1	8	7	7	87	75	68
+Alessandro_Volta	undefined	7	3	017	18	20	3	0	0	0	9	6	6	25	20	20
+Blind_Willie_McTell	undefined	10	0		25	1		0		3	1	1	1	1	1	1
+Abraham	undefined	0	0	7830	0	0	0	0	1	0	16	0	0	167	0	0
+Detroit_Lions	undefined	2	3	225	19	16	3	3	10	6	13	10	9	46	23	26
+Societas_Europaea	undefined	2	0	226	2	0	1	0	5	9	16	11	1	4	3	3
+European_Environment_Agency	undefined	8	1	36	8	2	3	3	1	1	11	11	11	20	17	17
+Devo	undefined	2	3	80	80	53	1	2	37	42	10	5	5	310	249	253
+Compaq	undefined	6	4	1530	172	150	5	2	43	19	14	9	10	108	89	89
+Apache_Software_Foundation	undefined	10	1	54	14	3	1	0	1	0	3	2	0	13	10	11
+England_national_football_team	undefined	12	5	236	29	36	0	0	12	0	14	6	5	128	77	72
+A.C._ChievoVerona	undefined	0	0	135	0	0	1	0	24	0	7	0	0	112	0	0
+American_Film_Institute	undefined	4	0	36	23	2	0	0	5	1	1	0	0	128	115	109
+Aon_(company)	undefined	8	2	421	38	18	1	0	11	10	7	6	5	47	33	32
+Albania	undefined	11	16		153	125		2		43	1	1	1	1	1	1
+Aberdeen,_South_Dakota	undefined	1	0	680	23	41	1	1	19	20	7	3	3	70	58	59
+Adelaide	undefined	0	4	1080	0	50		6		32	1	1	1	1	1	1
+Central_America	undefined	9	0	490	59	0	1	0	16	0	39	31	13	238	196	191
+Dahomey	undefined	4	2	290	33	9	2	3	19	34	7	5	6	52	40	38
+Anbar_(town)	undefined	2	1	50	5	5	0	0	5	6	3	3	3	23	14	13
+Amathus	undefined	2	1	170	18	11	0	0	8	0	8	8	8	78	58	59
+Helsingø	undefined	0	0	140	0	0	0	0	8	0	5	0	0	60	0	0
+Annapolis_Valley	undefined	3	0	76	9	5	3	0	14	21	8	5	4	67	52	52
+Albanian Republic	undefined	0	0		0	0		0		0	1	0	0	1	0	0
+Cook_Islands	undefined	9	0	333	57	1	2	0	12	2	7	7	0	67	51	49
+Aruba	undefined	6	3	790	81	34	0	0	1	3	14	13	11	143	114	114
+Mount_Rushmore	undefined	0	0	201	0	0	0	0	2	0	26	0	0	111	0	0
+Achill_Island	undefined	11	0	534	52	24	1	1	19	14	12	7	0	81	61	60
+Baker_Island	undefined	8	1	34	32	4	3	0	21	0	11	8	8	36	25	26
+Anadyr_River	undefined	3	0	25	10	5	0	0	1	1	5	4	4	26	21	22
+Costa_Smeralda	undefined	5	0	00	0	0	5	3	0	0	12	7	0	1	0	0
+Cayuga_Lake	undefined	1	0	110	27	0	0	0	12	0	3	1	3	31	26	25
+Dead_Sea	undefined	11	0	910	119	0	0	0	13	5	12	6	1	185	149	146
+Aegean_Sea	undefined	2	0	107	20	7	2	0	8	0	14	10	11	116	85	84
+Amu_Darya	undefined	4	0	198	33	8	2	1	19	15	9	6	0	91	70	72
+Baker_Island_(Maine)	undefined	0	0	00	0	0	3	0	0	0	9	0	0	1	0	0
+Gulf_of_Anadyr	undefined	0	0	10	0	0	0	0	1	0	3	0	0	12	0	0
+McKinney_High_School	undefined	0	0	00	0	0	2	0	0	0	4	0	0	1	0	0
+Crandall_University	undefined	4	0	40	9	1	1	0	6	8	4	4	4	4	4	4
+Park_Güell	undefined	18	3	30	16	3	3	0	10	0	12	9	5	13	5	2
+Arc_de_Triomphe	undefined	6	0	81	9	0	0	0	10	0	22	17	16	59	44	39
+Alexanderplatz	undefined	2	1	61	7	5	0	0	1	1	4	3	3	31	16	21
+American_Film_Institute	undefined	4	0	28	23	2	0	0	6	1	1	0	0	130	118	109
+Abbotsford_House	undefined	3	0	16	10	12	0	1	13	5	5	4	4	42	29	29
+Cobble_Hill_Tunnel	undefined	3	0	20	4	0	0	0	14	19	4	4	4	41	29	30
+Army_of_Darkness	undefined	4	0	210	21	0	3	4	18	20	16	13	2	94	73	66
+Batman_Returns	undefined	4	1	141	16	15	3	2	12	13	27	20	24	264	249	243
+Destry_Rides_Again	undefined	2	0	10	7	2	0	0	4	0	15	13	12	28	21	23
+Decade_(Neil_Young_album)	undefined	2	1	50	6	5	1	0	5	0	4	2	2	42	37	33
+Blood_on_the_Tracks	undefined	5	0	150	14	0	7	7	14	7	21	17	6	106	101	96
+Piano_Trios,_Op._70_(Beethoven)	undefined	9	0	00	0	0	2	0	0	0	12	9	0	1	0	0
+Death_of_a_Hero	undefined	2	0	10	1	0	0	0	5	3	3	2	0	1	0	0
+Dead_Sea_(Novel)	undefined	0	0	10	0	0	0	0	1	0	2	0	0	5	0	0
+Destry_Rides_Again	undefined	2	0	10	7	2	0	0	3	0	13	13	11	8	8	7
+Animalia (book)	undefined	0	0	20	0	0	1	0	1	0	2	0	0	12	0	0
+Blue_Velvet_(film)	undefined	0	0	360	3	0	3	3	52	43	20	16	0	206	184	0
+Buffy_the_Vampire_Slayer_(film)	undefined	0	0	00	4	0	3	2	13	13	9	8	0	83	69	0
